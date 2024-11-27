@@ -225,7 +225,17 @@ def train(args, model, train_dataset,epoch):
                 hids1.append(hid)
             outSeq1 = torch.cat(outVals,dim=0)
             hids1 = torch.cat(hids1,dim=0)
-            loss1 = criterion(outSeq1.view(args.batch_size,-1), targetSeq.view(args.batch_size,-1))
+            # print(outSeq1.size(),targetSeq.size())
+            # print(outSeq1.view(args.batch_size,-1).shape)
+            # print(targetSeq.view(args.batch_size,-1).shape)
+            # print(f"outSeq1 shape: {outSeq1.shape}, contiguous: {outSeq1.is_contiguous()}")
+            # print(f"targetSeq shape: {targetSeq.shape}, contiguous: {targetSeq.is_contiguous()}")
+            targetSeq = targetSeq.contiguous()
+            loss1 = criterion(
+                outSeq1.view(args.batch_size, -1), 
+                targetSeq.view(args.batch_size, -1)
+            )
+            # loss1 = criterion(outSeq1.view(args.batch_size,-1), targetSeq.view(args.batch_size,-1))
 
             '''Loss2: Teacher forcing loss'''
             outSeq2, hidden, hids2 = model.forward(inputSeq, hidden, return_hiddens=True)
@@ -276,7 +286,13 @@ def evaluate(args, model, test_dataset):
                 hids1.append(hid)
             outSeq1 = torch.cat(outVals,dim=0)
             hids1 = torch.cat(hids1,dim=0)
-            loss1 = criterion(outSeq1.view(args.batch_size,-1), targetSeq.view(args.batch_size,-1))
+
+            targetSeq = targetSeq.contiguous()
+            loss1 = criterion(
+                outSeq1.view(args.batch_size, -1), 
+                targetSeq.view(args.batch_size, -1)
+            )
+            # loss1 = criterion(outSeq1.view(args.batch_size,-1), targetSeq.view(args.batch_size,-1))
 
             '''Loss2: Teacher forcing loss'''
             outSeq2, hidden, hids2 = model.forward(inputSeq, hidden, return_hiddens=True)

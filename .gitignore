@@ -10,3 +10,5 @@ raw_dataset/*
 *.zip
 *.pkl
 anomaly_dataset/*
+
+venv
