@@ -1,0 +1,1 @@
+python 1_train_predictor.py --data custom --filename custom.pkl --device cpu
