@@ -34,9 +34,6 @@ df.describe()
 
 df.isnull().sum()
 
-import matplotlib.pyplot as plt
-df.plot(subplots =True, sharex = True, figsize = (20,50))
-
 """### periodic
 - 비슷한 pattern을 보이는 sensor들이 존재
   - sensor (1,2,3)
@@ -62,30 +59,6 @@ df.fillna(method='ffill', inplace=True)
 
 df.replace({'machine_status': {'RECOVERING': 2, 'BROKEN': 1, 'NORMAL': 0}}, inplace=True)
 df['timestamp'] = pd.to_datetime(df['timestamp'])
-
-print('Start time: ', df['timestamp'].min())
-print('End time: ', df['timestamp'].max())
-print('Time difference: ', df['timestamp'].max()-df['timestamp'].min())
-
-"""'Normal' data는 파란색으로 'broken'data는 빨간색으로, 'recovering'data는 노란색으로 plotting (아래코드는 캐글에서 인용)"""
-
-build_plots_full = False
-
-if build_plots_full:
-    col_names = df.columns[1:-1]
-else:
-    col_names = df.columns[1:4]
-
-for col_name in col_names:
-    plot = plt.figure(figsize=(22,1))
-    plot = plt.plot(df[col_name].loc[df['machine_status'] == 2], linestyle='none', marker='o', color='yellow', markersize=5)
-    plot = plt.plot(df[col_name], color='mediumblue', label=col_name)
-    plot = plt.plot(df[col_name].loc[df['machine_status'] == 1], linestyle='none', marker='X', color='red', markersize=7)
-    plt.legend(loc='upper right')
-    plt.xlim((-1000,250000))
-    frame1 = plt.gca()
-    frame1.axes.get_yaxis().set_visible(False)
-    plt.show()
 
 # machine status == 2 or 1 인 경우 test
 # machine status == 0 인 경우 train
