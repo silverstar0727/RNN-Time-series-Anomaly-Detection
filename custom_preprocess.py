@@ -7,15 +7,12 @@ Original file is located at
     https://colab.research.google.com/drive/1ASww4kVaU4wjjwEaDNCzzWts7Vi_hiqS
 """
 
-from google.colab import drive
-drive.mount('/content/drive')
-
 import numpy as np
 import random
 import matplotlib.pyplot as plt
 import pandas as pd
 
-df = pd.read_csv('/content/drive/MyDrive/Colab Notebooks/팀플/sensor.csv')
+df = pd.read_csv('sensor.csv')
 
 """총 6개의 broken data, broken이후 recovering중인 데이터, 정상데이터로 구성
 'broken'은 각 타임스탬프에서 이상이 있다는것을 의미하며, 'recovering'은 현재 타임스텝에서 이상이 발생한 직후에 펌프를 이상으로 복구중임을 의미한다.이러한 값을 후에 각각 라벨인코딩(0,1,2)
